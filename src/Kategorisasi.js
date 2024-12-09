@@ -1,12 +1,20 @@
 // kategorisasi.js
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom"; // Import useLocation
-import { Card as BootstrapCard, Container, Tab, Tabs, Table, Pagination } from "react-bootstrap"; // Import Bootstrap Tabs and Card
+import {
+  Card as BootstrapCard,
+  Container,
+  Tab,
+  Tabs,
+  Table,
+  Pagination,
+} from "react-bootstrap"; // Import Bootstrap Tabs and Card
 import moment from "moment";
-import { FaCheckCircle, FaStar } from 'react-icons/fa'; // Remove FaRegFrown
-import ChartIPSemester from './ChartIPSemester';  // Import ChartIPSemester component
-import {  Grid } from "@mui/material";
+import { FaCheckCircle, FaStar } from "react-icons/fa"; // Remove FaRegFrown
+import ChartIPSemester from "./ChartIPSemester"; // Import ChartIPSemester component
+import { Grid } from "@mui/material";
 import BasicPie from "./PieChart";
+import { BsExclamationCircleFill } from "react-icons/bs";
 
 // Kegiatan Mahasiswa Component with Pagination
 const KegiatanMahasiswa = ({ data }) => {
@@ -17,7 +25,10 @@ const KegiatanMahasiswa = ({ data }) => {
   const totalPages = Math.ceil(data.length / itemsPerPage);
 
   // Get the current page's data (items for the current page)
-  const currentData = data.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+  const currentData = data.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   // Handle page change
   const handlePageChange = (page) => {
@@ -25,26 +36,27 @@ const KegiatanMahasiswa = ({ data }) => {
   };
   const jenisKegiatan = [];
   for (const dataRow of data) {
-    const {tingkat_kegiatan}=dataRow;
-     if(!jenisKegiatan.includes(tingkat_kegiatan))jenisKegiatan.push(tingkat_kegiatan)
+    const { tingkat_kegiatan } = dataRow;
+    if (!jenisKegiatan.includes(tingkat_kegiatan))
+      jenisKegiatan.push(tingkat_kegiatan);
   }
-  const dataPieChart = []
-  let ikegiatan = 0
+  const dataPieChart = [];
+  let ikegiatan = 0;
   for (const kegiatan of jenisKegiatan) {
-    let totalKegiatan= 0
+    let totalKegiatan = 0;
     for (const dataRow of data) {
-      if(dataRow.tingkat_kegiatan===kegiatan)totalKegiatan++
+      if (dataRow.tingkat_kegiatan === kegiatan) totalKegiatan++;
     }
-    const percentKegiatan = totalKegiatan
-    dataPieChart.push ({
+    const percentKegiatan = totalKegiatan;
+    dataPieChart.push({
       id: 5000 + ikegiatan,
       value: percentKegiatan,
       label: kegiatan,
-    })
-    ikegiatan++
+    });
+    ikegiatan++;
   }
 
-  console.log("dataPiechart", dataPieChart)
+  console.log("dataPiechart", dataPieChart);
 
   return (
     <Grid container spacing={2}>
@@ -96,11 +108,17 @@ const KegiatanMahasiswa = ({ data }) => {
         </Pagination>
       </Grid>
 
-      {/* Right Column: Pie Chart */} 
-      <Grid container
-    justifyContent="center"
-    // alignItems="center"
-    style={{ minHeight: '100%' }} item xs={4} md={4} lg={4}>
+      {/* Right Column: Pie Chart */}
+      <Grid
+        container
+        justifyContent="center"
+        // alignItems="center"
+        style={{ minHeight: "100%" }}
+        item
+        xs={4}
+        md={4}
+        lg={4}
+      >
         <BasicPie data={dataPieChart} />
       </Grid>
     </Grid>
@@ -116,7 +134,10 @@ const KelulusanMahasiswa = ({ kelulusan }) => {
   const totalPages = Math.ceil(kelulusan.length / itemsPerPage);
 
   // Get the current page's data (items for the current page)
-  const currentData = kelulusan.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+  const currentData = kelulusan.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   // Handle page change
   const handlePageChange = (page) => {
@@ -190,7 +211,7 @@ const KelulusanMahasiswa = ({ kelulusan }) => {
     </div>
   );
 };
-  
+
 const Kategorisasi = () => {
   const location = useLocation();
   const student = location.state; // Get student data from location state
@@ -204,13 +225,13 @@ const Kategorisasi = () => {
 
   return (
     <Container>
-
-
       {/* Card Section with Flexbox for horizontal layout */}
       <div className="d-flex flex-wrap justify-content-between mb-4">
         {/* Card 1: Kelulusan */}
         <BootstrapCard
-          className={`text-white bg-${getCardColor(student?.persentase_kelulusan)} mb-3`}
+          className={`text-white bg-${getCardColor(
+            student?.persentase_kelulusan
+          )} mb-3`}
           style={{
             width: "45%",
             borderRadius: "12px",
@@ -221,7 +242,11 @@ const Kategorisasi = () => {
         >
           <BootstrapCard.Body>
             <div className="d-flex justify-content-center align-items-center mb-3">
-              <FaCheckCircle size={40} color="white" />
+              {student?.persentase_kelulusan >= 50 ? (
+                <FaCheckCircle size={40} color="white" />
+              ) : (
+                <BsExclamationCircleFill size={40} color="white" />
+              )}
             </div>
             <BootstrapCard.Title
               className="text-center"
@@ -229,8 +254,11 @@ const Kategorisasi = () => {
             >
               Kelulusan
             </BootstrapCard.Title>
-            <p className="text-center" style={{ fontSize: "1rem", margin: "10px 0 0" }}>
-              Persentase:{" "}
+            <p
+              className="text-center"
+              style={{ fontSize: "1rem", margin: "10px 0 0" }}
+            >
+              Persentase Kelulusan :{" "}
               <strong>
                 {student?.persentase_kelulusan
                   ? student.persentase_kelulusan.toFixed(1) // Membatasi 1 angka desimal
@@ -243,7 +271,11 @@ const Kategorisasi = () => {
 
         {/* Card 2: Prestasi */}
         <BootstrapCard
-          className={`text-white bg-${getCardColor(student?.persentase_berprestasi)} mb-3`}
+          className={`text-white bg-${
+            student?.kategori_berprestasi === "Berprestasi"
+              ? "success"
+              : "warning"
+          } mb-3`}
           style={{
             width: "45%",
             borderRadius: "12px",
@@ -254,21 +286,30 @@ const Kategorisasi = () => {
         >
           <BootstrapCard.Body>
             <div className="d-flex justify-content-center align-items-center mb-3">
-              <FaStar size={40} color="white" />
+              {student?.kategori_berprestasi === "Berprestasi" ? (
+                <FaStar size={40} color="white" />
+              ) : (
+                <BsExclamationCircleFill size={40} color="white" />
+              )}
             </div>
             <BootstrapCard.Title
               className="text-center"
               style={{ fontSize: "1.2rem", fontWeight: "bold" }}
             >
-              Prestasi
+              Kategorisasi Mahasiswa
             </BootstrapCard.Title>
-            <p className="text-center" style={{ fontSize: "1rem", margin: "10px 0 0" }}>
-              Persentase:{" "}
+            <p
+              className="text-center"
+              style={{ fontSize: "1rem", margin: "10px 0 0" }}
+            >
               <strong>
-                {student?.persentase_berprestasi
+                {/* {student?.persentase_berprestasi
                   ? student.persentase_berprestasi.toFixed(1) // Membatasi 1 angka desimal
                   : "0.0"}{" "}
-                %
+                % */}
+                {student?.kategori_berprestasi
+                  ? '"' + student?.kategori_berprestasi + '"'
+                  : "-"}
               </strong>
             </p>
           </BootstrapCard.Body>
@@ -293,15 +334,21 @@ const Kategorisasi = () => {
               alignItems: "center",
             }}
           >
-            <div><strong>Nama</strong></div>
+            <div>
+              <strong>Nama</strong>
+            </div>
             <div>:</div>
             <div>{student?.nama_mahasiswa ?? "-"}</div>
 
-            <div><strong>NPM</strong></div>
+            <div>
+              <strong>NPM</strong>
+            </div>
             <div>:</div>
             <div>{student?.npm_mahasiswa ?? "-"}</div>
 
-            <div><strong>Status</strong></div>
+            <div>
+              <strong>Status</strong>
+            </div>
             <div>:</div>
             <div
               style={{
@@ -317,27 +364,38 @@ const Kategorisasi = () => {
               {student?.status_mahasiswa ?? "-"}
             </div>
 
-            <div><strong>Jurusan</strong></div>
+            <div>
+              <strong>Jurusan</strong>
+            </div>
             <div>:</div>
             <div>{student?.prodi_mahasiswa ?? "-"}</div>
 
-            <div><strong>IPK</strong></div>
+            <div>
+              <strong>IPK</strong>
+            </div>
             <div>:</div>
             <div style={{ fontWeight: "bold" }}>
               {student?.ipk_mahasiswa ? student?.ipk_mahasiswa.toFixed(2) : "-"}
             </div>
           </div>
         ) : (
-          <div><strong style={{ color: 'red' }}>Mohon memilih mahasiswa terlebih dahulu</strong></div>
+          <div>
+            <strong style={{ color: "red" }}>
+              Mohon memilih mahasiswa terlebih dahulu
+            </strong>
+          </div>
         )}
       </BootstrapCard>
 
       {/* Tabs for Kelulusan, Kegiatan Mahasiswa */}
-      <Tabs defaultActiveKey="Nilai" id="student-category-tabs" className="mb-3">
-        
+      <Tabs
+        defaultActiveKey="Nilai"
+        id="student-category-tabs"
+        className="mb-3"
+      >
         <Tab eventKey="Nilai" title="Nilai">
           <div style={{ display: "flex", justifyContent: "center" }}>
-            <KelulusanMahasiswa kelulusan={student.daftar_mata_kuliah} />           
+            <KelulusanMahasiswa kelulusan={student.daftar_mata_kuliah} />
           </div>
         </Tab>
 
