@@ -274,7 +274,7 @@ const Kategorisasi = () => {
           className={`text-white bg-${
             student?.kategori_berprestasi === "Berprestasi"
               ? "success"
-              : "warning"
+              : "danger"
           } mb-3`}
           style={{
             width: "45%",
