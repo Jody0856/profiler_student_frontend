@@ -1,0 +1,11 @@
+/* src/App.css */
+.App {
+  display: flex;
+}
+
+.content {
+  margin-left: 250px; /* Mengimbangi lebar sidebar */
+  padding: 20px; 
+  width: 100%;
+}
+ 
