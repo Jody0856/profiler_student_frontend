@@ -1,20 +1,20 @@
 // kategorisasi.js
+import { Grid } from "@mui/material";
+import moment from "moment";
 import React, { useState } from "react";
-import { useLocation } from "react-router-dom"; // Import useLocation
 import {
   Card as BootstrapCard,
   Container,
-  Tab,
-  Tabs,
-  Table,
   Pagination,
+  Tab,
+  Table,
+  Tabs,
 } from "react-bootstrap"; // Import Bootstrap Tabs and Card
-import moment from "moment";
-import { FaCheckCircle, FaStar, FaUserGraduate } from "react-icons/fa"; // Remove FaRegFrown
-import ChartIPSemester from "./ChartIPSemester"; // Import ChartIPSemester component
-import { Grid } from "@mui/material";
-import BasicPie from "./PieChart";
 import { BsExclamationCircleFill } from "react-icons/bs";
+import { FaUserGraduate } from "react-icons/fa"; // Remove FaRegFrown
+import { useLocation } from "react-router-dom"; // Import useLocation
+import ChartIPSemester from "./ChartIPSemester"; // Import ChartIPSemester component
+import BasicPie from "./PieChart";
 
 // Kegiatan Mahasiswa Component with Pagination
 const KegiatanMahasiswa = ({ data }) => {
@@ -230,6 +230,11 @@ const Kategorisasi = () => {
       return "Mahasiswa mungkin masih on-track lulus, tetapi perlu peningkatan performa";
     return "Kinerja Mahasiswa sangat baik, masih on-track untuk lulus tepat waktu";
   };
+  const TextCategory = (data) => {
+    if (data === "Memenuhi Standar")
+      return "Mahasiswa sudah mencapai tingkat keterlibatan yang optimal dan memenuhi kriteria.";
+    return "Mahasiswa sudah mengikuti cukup banyak kegiatan, namun masih perlu peningkatan dalam jenis kegiatan yang lebih berdampak.";
+  };
   return (
     <Container>
       <BootstrapCard
@@ -363,6 +368,9 @@ const Kategorisasi = () => {
                         {student?.kategori_mahasiswa ?? ""}
                       </p>
                     </BootstrapCard.Body>
+                    <BootstrapCard.Footer className="text-center">
+                      {TextCategory(student?.kategori_mahasiswa)}
+                    </BootstrapCard.Footer>
                   </BootstrapCard>
                 </div>
               </div>
