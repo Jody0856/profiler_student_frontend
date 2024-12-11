@@ -10,7 +10,7 @@ import {
   Pagination,
 } from "react-bootstrap"; // Import Bootstrap Tabs and Card
 import moment from "moment";
-import { FaCheckCircle, FaStar } from "react-icons/fa"; // Remove FaRegFrown
+import { FaCheckCircle, FaStar, FaUserGraduate } from "react-icons/fa"; // Remove FaRegFrown
 import ChartIPSemester from "./ChartIPSemester"; // Import ChartIPSemester component
 import { Grid } from "@mui/material";
 import BasicPie from "./PieChart";
@@ -223,99 +223,15 @@ const Kategorisasi = () => {
     return "success"; // Green color for 70 and above
   };
 
+  const TextGraduate = (data) => {
+    if (data < 50)
+      return "Kemungkinan besar mahasiwa tidak akan lulus berdasarkan performa.";
+    if (data >= 50 && data <= 70)
+      return "Mahasiswa mungkin masih on-track lulus, tetapi perlu peningkatan performa";
+    return "Kinerja Mahasiswa sangat baik, masih on-track untuk lulus tepat waktu";
+  };
   return (
     <Container>
-      {/* Card Section with Flexbox for horizontal layout */}
-      <div className="d-flex flex-wrap justify-content-between mb-4">
-        {/* Card 1: Kelulusan */}
-        <BootstrapCard
-          className={`text-white bg-${getCardColor(
-            student?.persentase_kelulusan
-          )} mb-3`}
-          style={{
-            width: "45%",
-            borderRadius: "12px",
-            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-            padding: "15px 20px",
-            transition: "transform 0.3s ease",
-          }}
-        >
-          <BootstrapCard.Body>
-            <div className="d-flex justify-content-center align-items-center mb-3">
-              {student?.persentase_kelulusan >= 50 ? (
-                <FaCheckCircle size={40} color="white" />
-              ) : (
-                <BsExclamationCircleFill size={40} color="white" />
-              )}
-            </div>
-            <BootstrapCard.Title
-              className="text-center"
-              style={{ fontSize: "1.2rem", fontWeight: "bold" }}
-            >
-              Kelulusan
-            </BootstrapCard.Title>
-            <p
-              className="text-center"
-              style={{ fontSize: "1rem", margin: "10px 0 0" }}
-            >
-              Persentase Kelulusan :{" "}
-              <strong>
-                {student?.persentase_kelulusan
-                  ? student.persentase_kelulusan.toFixed(1) // Membatasi 1 angka desimal
-                  : "0.0"}{" "}
-                %
-              </strong>
-            </p>
-          </BootstrapCard.Body>
-        </BootstrapCard>
-
-        {/* Card 2: Prestasi */}
-        <BootstrapCard
-          className={`text-white bg-${
-            student?.kategori_berprestasi === "Berprestasi"
-              ? "success"
-              : "danger"
-          } mb-3`}
-          style={{
-            width: "45%",
-            borderRadius: "12px",
-            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-            padding: "15px 20px",
-            transition: "transform 0.3s ease",
-          }}
-        >
-          <BootstrapCard.Body>
-            <div className="d-flex justify-content-center align-items-center mb-3">
-              {student?.kategori_berprestasi === "Berprestasi" ? (
-                <FaStar size={40} color="white" />
-              ) : (
-                <BsExclamationCircleFill size={40} color="white" />
-              )}
-            </div>
-            <BootstrapCard.Title
-              className="text-center"
-              style={{ fontSize: "1.2rem", fontWeight: "bold" }}
-            >
-              Kategorisasi Mahasiswa
-            </BootstrapCard.Title>
-            <p
-              className="text-center"
-              style={{ fontSize: "1rem", margin: "10px 0 0" }}
-            >
-              <strong>
-                {/* {student?.persentase_berprestasi
-                  ? student.persentase_berprestasi.toFixed(1) // Membatasi 1 angka desimal
-                  : "0.0"}{" "}
-                % */}
-                {student?.kategori_berprestasi
-                  ? '"' + student?.kategori_berprestasi + '"'
-                  : "-"}
-              </strong>
-            </p>
-          </BootstrapCard.Body>
-        </BootstrapCard>
-      </div>
-
       <BootstrapCard
         className="shadow-sm mb-4"
         style={{
@@ -326,56 +242,130 @@ const Kategorisasi = () => {
       >
         <h3 className="mb-3"> Data Mahasiswa</h3>
         {student ? (
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "150px 20px 1fr", // Columns for label, colon, and value
-              rowGap: "10px",
-              alignItems: "center",
-            }}
-          >
-            <div>
-              <strong>Nama</strong>
-            </div>
-            <div>:</div>
-            <div>{student?.nama_mahasiswa ?? "-"}</div>
+          <div className="row">
+            <div className="col-lg-6">
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "150px 20px 1fr", // Columns for label, colon, and value
+                  rowGap: "10px",
+                  alignItems: "center",
+                }}
+              >
+                <div>
+                  <strong>Nama</strong>
+                </div>
+                <div>:</div>
+                <div>{student?.nama_mahasiswa ?? "-"}</div>
 
-            <div>
-              <strong>NPM</strong>
-            </div>
-            <div>:</div>
-            <div>{student?.npm_mahasiswa ?? "-"}</div>
+                <div>
+                  <strong>NPM</strong>
+                </div>
+                <div>:</div>
+                <div>{student?.npm_mahasiswa ?? "-"}</div>
 
-            <div>
-              <strong>Status</strong>
-            </div>
-            <div>:</div>
-            <div
-              style={{
-                color:
-                  student?.status_mahasiswa === "Lulus"
-                    ? "green"
-                    : student?.status_mahasiswa === "NonAktif"
-                    ? "red"
-                    : "blue",
-                fontWeight: "bold",
-              }}
-            >
-              {student?.status_mahasiswa ?? "-"}
-            </div>
+                <div>
+                  <strong>Status</strong>
+                </div>
+                <div>:</div>
+                <div
+                  style={{
+                    color:
+                      student?.status_mahasiswa === "Lulus"
+                        ? "green"
+                        : student?.status_mahasiswa === "NonAktif"
+                        ? "red"
+                        : "blue",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {student?.status_mahasiswa ?? "-"}
+                </div>
 
-            <div>
-              <strong>Jurusan</strong>
-            </div>
-            <div>:</div>
-            <div>{student?.prodi_mahasiswa ?? "-"}</div>
+                <div>
+                  <strong>Jurusan</strong>
+                </div>
+                <div>:</div>
+                <div>{student?.prodi_mahasiswa ?? "-"}</div>
 
-            <div>
-              <strong>IPK</strong>
+                <div>
+                  <strong>IPK</strong>
+                </div>
+                <div>:</div>
+                <div style={{ fontWeight: "bold" }}>
+                  {student?.ipk_mahasiswa
+                    ? student?.ipk_mahasiswa.toFixed(2)
+                    : "-"}
+                </div>
+              </div>
             </div>
-            <div>:</div>
-            <div style={{ fontWeight: "bold" }}>
-              {student?.ipk_mahasiswa ? student?.ipk_mahasiswa.toFixed(2) : "-"}
+            <div className="col-lg-6">
+              <div className="row">
+                <div className="col-lg-12">
+                  <BootstrapCard
+                    className={`text-white bg-${getCardColor(
+                      student?.persentase_kelulusan
+                    )} mb-3`}
+                    style={{
+                      //  width: "45%",
+                      // borderRadius: "12px",
+                      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                      padding: "15px 20px",
+                      transition: "transform 0.3s ease",
+                    }}
+                  >
+                    <BootstrapCard.Body>
+                      <div className="d-flex justify-content-center align-items-center mb-3">
+                        <FaUserGraduate size={40} color="white" />
+                      </div>
+                      <BootstrapCard.Title
+                        className="text-center"
+                        // style={{ fontSize: "1.2rem", fontWeight: "bold" }}
+                      ></BootstrapCard.Title>
+                      <p
+                        className="text-center"
+                        style={{ fontSize: "1rem", margin: "10px 0 0" }}
+                      >
+                        Persentase Kelulusan :{" "}
+                        <strong>
+                          {student?.persentase_kelulusan
+                            ? student.persentase_kelulusan.toFixed(1) // Membatasi 1 angka desimal
+                            : "0.0"}{" "}
+                          %
+                        </strong>
+                      </p>
+                    </BootstrapCard.Body>
+                    <BootstrapCard.Footer className="text-center">
+                      {TextGraduate(student?.persentase_kelulusan)}
+                    </BootstrapCard.Footer>
+                  </BootstrapCard>
+                </div>
+                <div className="col-lg-12">
+                  <BootstrapCard
+                    className={`text-white bg-info mb-3`}
+                    style={{
+                      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                      padding: "15px 20px",
+                      transition: "transform 0.3s ease",
+                    }}
+                  >
+                    <BootstrapCard.Body>
+                      <div className="d-flex justify-content-center align-items-center mb-3">
+                        <BsExclamationCircleFill size={40} color="white" />
+                      </div>
+                      <BootstrapCard.Title className="text-center">
+                        {/* Kategori Mahasiswa */}
+                      </BootstrapCard.Title>
+                      <p
+                        className="text-center"
+                        style={{ fontSize: "1rem", margin: "10px 0 0" }}
+                      >
+                        {student?.kategori_mahasiswa ?? ""}
+                      </p>
+                    </BootstrapCard.Body>
+                  </BootstrapCard>
+                </div>
+              </div>
             </div>
           </div>
         ) : (

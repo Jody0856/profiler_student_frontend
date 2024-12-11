@@ -22,15 +22,33 @@ const ChartIPSemester = ({ data }) => {
   });
 
   // Membuat label untuk semester (misal: "2024-Gasal", "2024-Genap")
-  const semesters = [...new Set(sortedData.map(item => `Semester ${item.tahun_semester}-${item.jenis_semester}`))];
+  const semesters = [
+    ...new Set(
+      sortedData.map((item) => {
+        let text1 = item.jenis_semester;
+        let text = text1.charAt(0).toUpperCase() + text1.slice(1);
+        return `${text}-${item.tahun_semester}`;
+        // return ` ${item.jenis_semester}-${item.tahun_semester}`;
+      })
+    ),
+  ];
 
   // Menghitung IPK untuk setiap semester
-  const ipkValues = semesters.map(semester => {
-    const semesterData = sortedData.filter(
-      item => `Semester ${item.tahun_semester}-${item.jenis_semester}` === semester
-    );
-    const totalSKS = semesterData.reduce((acc, item) => acc + item.sks_matakuliah, 0); // Total SKS untuk semester ini
-    const totalNilai = semesterData.reduce((acc, item) => acc + item.nilai * item.sks_matakuliah, 0); // Total nilai * SKS untuk semester ini
+  const ipkValues = semesters.map((semester) => {
+    const semesterData = sortedData.filter((item) => {
+      let text1 = item.jenis_semester;
+      let text = text1.charAt(0).toUpperCase() + text1.slice(1);
+      return `${text}-${item.tahun_semester}` === semester;
+      //return `${item.jenis_semester}-${item.tahun_semester}` === semester
+    });
+    const totalSKS = semesterData.reduce(
+      (acc, item) => acc + item.sks_matakuliah,
+      0
+    ); // Total SKS untuk semester ini
+    const totalNilai = semesterData.reduce(
+      (acc, item) => acc + item.nilai * item.sks_matakuliah,
+      0
+    ); // Total nilai * SKS untuk semester ini
     return totalNilai / totalSKS; // IPK = total nilai / total SKS
   });
 
@@ -39,13 +57,13 @@ const ChartIPSemester = ({ data }) => {
     labels: semesters, // Semester sebagai label chart
     datasets: [
       {
-        label: 'IPK Semester',
+        label: "IP Semester",
         data: ipkValues,
-        backgroundColor: 'rgba(75,192,192,0.6)', // Warna batang
-        borderColor: 'rgba(75,192,192,1)', // Warna border batang
+        backgroundColor: "rgba(75,192,192,0.6)", // Warna batang
+        borderColor: "rgba(75,192,192,1)", // Warna border batang
         borderWidth: 1,
-      }
-    ]
+      },
+    ],
   };
 
   // Opsi chart dengan batang yang lebih kecil

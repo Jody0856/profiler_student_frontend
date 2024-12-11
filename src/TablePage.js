@@ -89,6 +89,8 @@ const TablePage = () => {
         console.log('error',error)
         console.error("Error predicting student status:", error);
         alert("Gagal melakukan prediksi. Silakan coba lagi.");
+        
+        
       });
   };
 
@@ -141,7 +143,9 @@ const TablePage = () => {
           <option value="">Filter by Status</option>
           <option value="Lulus">Lulus</option>
           <option value="Aktif">Aktif</option>
-          <option value="NonAktif">NonAktif</option>
+          <option value="Drop-out (putus studi)">Drop-out (putus studi)</option>
+          <option value="Keluar">Keluar</option>
+          {/* <option value="NonAktif">NonAktif</option> */}
         </Form.Select>
   
         <Form.Select
@@ -163,7 +167,7 @@ const TablePage = () => {
           onChange={(e) => setSortOption(e.target.value)}
         >
           <option value="name">Sort by Name (A-Z)</option>
-          <option value="gpa">Sort by GPA (High to Low)</option>
+          <option value="gpa">Sort by IPK (High to Low)</option>
         </Form.Select>
       </div>
   
