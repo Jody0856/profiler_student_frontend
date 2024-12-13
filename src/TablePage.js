@@ -13,11 +13,12 @@ const TablePage = () => {
   const itemsPerPage = 8; // Set number of items per page
 
   const navigate = useNavigate();
-
+  const isLocal = window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost';
+  const API_URL = isLocal ? 'http://127.0.0.1:8000' : 'https://profiling-student.onrender.com';
   // Fetch data from API
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:8000/students")
+      .get(`${API_URL}/students`)
       .then((response) => {
         console.log('response',response.data)
         const data = response.data.students
@@ -80,7 +81,7 @@ const TablePage = () => {
     const formData = new FormData();
     formData.append('npm_mahasiswa',npm)
     axios
-      .post("http://127.0.0.1:8000/predict",formData )
+      .post(`${API_URL}/predict`,formData )
       .then((response) => {
         console.log('response',response.data)
         navigate("/kategorisasi", { state: response.data });
