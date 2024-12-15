@@ -458,14 +458,14 @@ const Kategorisasi = () => {
                     </div>
 
                     {/* Dominant Interest Section */}
-                    {/* <div className="mt-3 text-start">
+                    <div className="mt-3 text-start">
                       <p className="mb-2" style={{ fontWeight: "bold" }}>
                         Peminatan yang paling diminati:
                       </p>
                       <p className="mb-0" style={{ fontSize: "1rem" }}>
                         {getStatusBadge(student?.dominant_interest) ?? "Data not available"}
                       </p>
-                    </div> */}
+                    </div>
                   </BootstrapCard.Footer>
                 </BootstrapCard>
 
