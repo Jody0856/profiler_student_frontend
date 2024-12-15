@@ -235,6 +235,17 @@ const Kategorisasi = () => {
       return "Mahasiswa sudah mencapai tingkat keterlibatan yang optimal dan memenuhi kriteria.";
     return "Mahasiswa sudah mengikuti cukup banyak kegiatan, namun masih perlu peningkatan dalam jenis kegiatan yang lebih berdampak.";
   };
+
+  const StudentInterest = ({data}) => {
+    return (
+      <>
+      <p>
+     Peminatan: 
+      <b>  {Object.keys(data.detailed_interests).join(', ')}</b>
+      </p>
+      <p>Paling diminati: <b>{data.dominant_interest}</b></p></>
+    )
+  }
   return (
     <Container>
       <BootstrapCard
@@ -347,32 +358,59 @@ const Kategorisasi = () => {
                 </div>
                 <div className="col-lg-12">
                   <BootstrapCard
-                    className={`text-white bg-info mb-3`}
+                    className="text-white bg-info mb-3"
                     style={{
                       boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-                      padding: "15px 20px",
+                      padding: "20px 25px",
                       transition: "transform 0.3s ease",
                     }}
                   >
                     <BootstrapCard.Body>
-                      <div className="d-flex justify-content-center align-items-center mb-3">
-                        <BsExclamationCircleFill size={40} color="white" />
+                      {/* Icon Section */}
+                      <div className="d-flex justify-content-center align-items-center mb-4">
+                        <BsExclamationCircleFill size={50} color="white" />
                       </div>
-                      <BootstrapCard.Title className="text-center">
-                        {/* Kategori Mahasiswa */}
+                      {/* Title Section */}
+                      <BootstrapCard.Title className="text-center mb-3" style={{ fontSize: "1.5rem", fontWeight: "bold" }}>
+                        Kategori Mahasiswa
                       </BootstrapCard.Title>
-                      <p
-                        className="text-center"
-                        style={{ fontSize: "1rem", margin: "10px 0 0" }}
-                      >
-                        {student?.kategori_mahasiswa ?? ""}
-                      </p>
+                      {/* Kategori Mahasiswa Section */}
+                      <div className="text-center mb-3">
+                        <p className="lead" style={{ fontSize: "1.2rem", fontWeight: "bold" }}>
+                          {student?.kategori_mahasiswa ?? "Data not available"}
+                        </p>
+                      </div>
                     </BootstrapCard.Body>
+                    
+                    {/* Footer Section */}
                     <BootstrapCard.Footer className="text-center">
-                      {TextCategory(student?.kategori_mahasiswa)}
+                      <div className="d-flex justify-content-between">
+                        {/* Category Text Section */}
+                        <div className="w-50">
+                          <p className="mb-2" style={{ fontWeight: "bold" }}>Kategori:</p>
+                          <p className="mb-0">{TextCategory(student?.kategori_mahasiswa)}</p>
+                        </div>
+                        
+                        {/* Detailed Interests Section */}
+                        <div className="w-50">
+                          <p className="mb-2" style={{ fontWeight: "bold" }}>Peminatan:</p>
+                          <p className="mb-0" style={{ fontSize: "1rem" }}>
+                            <b>{Object.keys(student?.detailed_interests).join(', ')}</b>
+                          </p>
+                        </div>
+                      </div>
+                      
+                      {/* Dominant Interest Section */}
+                      <div className="mt-3">
+                        <p className="mb-2" style={{ fontWeight: "bold" }}>Paling Diminati:</p>
+                        <p className="mb-0" style={{ fontSize: "1rem" }}>
+                          <b>{student?.dominant_interest ?? "Data not available"}</b>
+                        </p>
+                      </div>
                     </BootstrapCard.Footer>
                   </BootstrapCard>
                 </div>
+
               </div>
             </div>
           </div>
