@@ -236,16 +236,6 @@ const Kategorisasi = () => {
     return "Mahasiswa sudah mengikuti cukup banyak kegiatan, namun masih perlu peningkatan dalam jenis kegiatan yang lebih berdampak.";
   };
 
-  const StudentInterest = ({data}) => {
-    return (
-      <>
-      <p>
-     Peminatan: 
-      <b>  {Object.keys(data.detailed_interests).join(', ')}</b>
-      </p>
-      <p>Paling diminati: <b>{data.dominant_interest}</b></p></>
-    )
-  }
   return (
     <Container>
       <BootstrapCard
@@ -395,7 +385,7 @@ const Kategorisasi = () => {
                         <div className="w-50">
                           <p className="mb-2" style={{ fontWeight: "bold" }}>Peminatan:</p>
                           <p className="mb-0" style={{ fontSize: "1rem" }}>
-                            <b>{Object.keys(student?.detailed_interests).join(', ')}</b>
+                            <p>{Object.keys(student?.detailed_interests).join(', ')}</p>
                           </p>
                         </div>
                       </div>
@@ -404,7 +394,7 @@ const Kategorisasi = () => {
                       <div className="mt-3">
                         <p className="mb-2" style={{ fontWeight: "bold" }}>Paling Diminati:</p>
                         <p className="mb-0" style={{ fontSize: "1rem" }}>
-                          <b>{student?.dominant_interest ?? "Data not available"}</b>
+                          <p>{student?.dominant_interest ?? "Data not available"}</p>
                         </p>
                       </div>
                     </BootstrapCard.Footer>
