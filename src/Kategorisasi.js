@@ -3,6 +3,7 @@ import { Grid } from "@mui/material";
 import moment from "moment";
 import React, { useState } from "react";
 import {
+  Badge,
   Card as BootstrapCard,
   Container,
   Pagination,
@@ -235,7 +236,58 @@ const Kategorisasi = () => {
       return "Mahasiswa sudah mencapai tingkat keterlibatan yang optimal dan memenuhi kriteria.";
     return "Mahasiswa sudah mengikuti cukup banyak kegiatan, namun masih perlu peningkatan dalam jenis kegiatan yang lebih berdampak.";
   };
-
+  const getStatusBadge = (status) => {
+    switch (status) {
+      case "Design":
+        return <Badge bg="success">{status}</Badge>;
+      case "IT":
+        return <Badge bg="primary">{status}</Badge>;
+      case "Programming":
+        return <Badge bg="warning" text="dark">{status}</Badge>;
+      case "Gaming":
+        return <Badge bg="danger">{status}</Badge>;
+      case "Data Science":
+        return <Badge bg="info">{status}</Badge>;
+      case "AI & Machine Learning":
+        return <Badge bg="dark">{status}</Badge>;
+      case "Cloud Computing":
+        return <Badge bg="secondary">{status}</Badge>;
+      case "Cyber Security":
+        return <Badge bg="light" text="dark">{status}</Badge>;
+      case "Virtual Reality":
+        return <Badge bg="purple" style={{ backgroundColor: "#6f42c1" }}>{status}</Badge>;
+      case "Marketing":
+        return <Badge bg="teal" style={{ backgroundColor: "#20c997" }}>{status}</Badge>;
+      case "Business & Tech":
+        return <Badge bg="orange" style={{ backgroundColor: "#fd7e14" }}>{status}</Badge>;
+      case "Project Management":
+        return <Badge bg="blue" style={{ backgroundColor: "#0d6efd" }}>{status}</Badge>;
+      case "Art & Music":
+        return <Badge bg="pink" style={{ backgroundColor: "#e83e8c" }}>{status}</Badge>;
+      case "Health & Wellness":
+        return <Badge bg="green" style={{ backgroundColor: "#28a745" }}>{status}</Badge>;
+      case "STEM":
+        return <Badge bg="yellow" style={{ backgroundColor: "#ffc107", color: "#212529" }}>{status}</Badge>;
+      case "Community Service":
+        return <Badge bg="brown" style={{ backgroundColor: "#795548" }}>{status}</Badge>;
+      case "Leadership & Personal Development":
+        return <Badge bg="cyan" style={{ backgroundColor: "#17a2b8", color: "#212529"  }}>{status}</Badge>;
+      case "Communication":
+        return <Badge bg="indigo" style={{ backgroundColor: "#6610f2" }}>{status}</Badge>;
+      case "Cinematography":
+        return <Badge bg="gold" style={{ backgroundColor: "#f0ad4e" }}>{status}</Badge>;
+      case "Education":
+        return <Badge bg="skyblue" style={{ backgroundColor: "#5bc0de" }}>{status}</Badge>;
+      case "Law":
+        return <Badge bg="navy" style={{ backgroundColor: "#001f3f" }}>{status}</Badge>;
+      case "Arts & Humanities":
+        return <Badge bg="violet" style={{ backgroundColor: "#d63384" }}>{status}</Badge>;
+      default:
+        return <Badge bg="secondary">{status}</Badge>;
+    }
+  };
+  
+  
   return (
     <Container>
       <BootstrapCard
@@ -347,58 +399,76 @@ const Kategorisasi = () => {
                   </BootstrapCard>
                 </div>
                 <div className="col-lg-12">
-                  <BootstrapCard
-                    className="text-white bg-info mb-3"
-                    style={{
-                      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-                      padding: "20px 25px",
-                      transition: "transform 0.3s ease",
-                    }}
+                <BootstrapCard
+                  className="text-white bg-info mb-3"
+                  style={{
+                    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                    padding: "20px 25px",
+                    transition: "transform 0.3s ease",
+                    borderRadius: "12px",
+                  }}
+                >
+                  <BootstrapCard.Body>
+                    {/* Icon Section */}
+                    <div className="d-flex justify-content-center align-items-center mb-4">
+                      <BsExclamationCircleFill size={50} color="white" />
+                    </div>
+
+                    {/* Title Section */}
+                    <BootstrapCard.Title
+                      className="text-center mb-3"
+                      style={{ fontSize: "1.5rem", fontWeight: "bold" }}
+                    >
+                      Kegiatan Mahasiswa
+                    </BootstrapCard.Title>
+
+                    {/* Kategori Mahasiswa Section */}
+                    <div className="text-center mb-3">
+                      <p className="lead" style={{ fontSize: "1.2rem", fontWeight: "bold" }}>
+                        {student?.kategori_mahasiswa ?? "Data not available"}
+                      </p>
+                    </div>
+                  </BootstrapCard.Body>
+
+                  {/* Footer Section */}
+                  <BootstrapCard.Footer
+                    className="text-center"
+                    style={{ backgroundColor: "#17a2b8", borderTop: "1px solid rgba(255,255,255,0.2)" }}
                   >
-                    <BootstrapCard.Body>
-                      {/* Icon Section */}
-                      <div className="d-flex justify-content-center align-items-center mb-4">
-                        <BsExclamationCircleFill size={50} color="white" />
-                      </div>
-                      {/* Title Section */}
-                      <BootstrapCard.Title className="text-center mb-3" style={{ fontSize: "1.5rem", fontWeight: "bold" }}>
-                        Kategori Mahasiswa
-                      </BootstrapCard.Title>
-                      {/* Kategori Mahasiswa Section */}
-                      <div className="text-center mb-3">
-                        <p className="lead" style={{ fontSize: "1.2rem", fontWeight: "bold" }}>
-                          {student?.kategori_mahasiswa ?? "Data not available"}
+                    <div className="d-flex justify-content-between">
+                      {/* Category Text Section */}
+                      <div className="w-50 px-2 text-start">
+                        <p className="mb-2" style={{ fontWeight: "bold" }}>
+                          Catatan:
                         </p>
+                        <p className="mb-0 border-1">{TextCategory(student?.kategori_mahasiswa)}</p>
                       </div>
-                    </BootstrapCard.Body>
-                    
-                    {/* Footer Section */}
-                    <BootstrapCard.Footer className="text-center">
-                      <div className="d-flex justify-content-between">
-                        {/* Category Text Section */}
-                        <div className="w-50">
-                          <p className="mb-2" style={{ fontWeight: "bold" }}>Kategori:</p>
-                          <p className="mb-0">{TextCategory(student?.kategori_mahasiswa)}</p>
-                        </div>
-                        
-                        {/* Detailed Interests Section */}
-                        <div className="w-50">
-                          <p className="mb-2" style={{ fontWeight: "bold" }}>Peminatan:</p>
-                          <p className="mb-0" style={{ fontSize: "1rem" }}>
-                            <p>{Object.keys(student?.detailed_interests).join(', ')}</p>
-                          </p>
+
+                      {/* Detailed Interests Section */}
+                      <div className="w-50 px-2 text-start">
+                        <p className="mb-2" style={{ fontWeight: "bold" }}>
+                          Peminatan Mahasiswa:
+                        </p>
+                        <div className="d-flex flex-wrap gap-2">
+                          {Object.keys(student?.detailed_interests || {}).map((interest, index) => (
+                            <div key={index}>{getStatusBadge(interest)}</div>
+                          ))}
                         </div>
                       </div>
-                      
-                      {/* Dominant Interest Section */}
-                      <div className="mt-3">
-                        <p className="mb-2" style={{ fontWeight: "bold" }}>Paling Diminati:</p>
-                        <p className="mb-0" style={{ fontSize: "1rem" }}>
-                          <p>{student?.dominant_interest ?? "Data not available"}</p>
-                        </p>
-                      </div>
-                    </BootstrapCard.Footer>
-                  </BootstrapCard>
+                    </div>
+
+                    {/* Dominant Interest Section */}
+                    <div className="mt-3 text-start">
+                      <p className="mb-2" style={{ fontWeight: "bold" }}>
+                        Peminatan yang paling diminati:
+                      </p>
+                      <p className="mb-0" style={{ fontSize: "1rem" }}>
+                        {getStatusBadge(student?.dominant_interest) ?? "Data not available"}
+                      </p>
+                    </div>
+                  </BootstrapCard.Footer>
+                </BootstrapCard>
+
                 </div>
 
               </div>
