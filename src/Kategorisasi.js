@@ -11,7 +11,7 @@ import {
   Table,
   Tabs,
 } from "react-bootstrap"; // Import Bootstrap Tabs and Card
-import { BsExclamationCircleFill } from "react-icons/bs";
+import { BsCheckCircle, BsExclamationCircleFill } from "react-icons/bs";
 import { FaUserGraduate } from "react-icons/fa"; // Remove FaRegFrown
 import { useLocation } from "react-router-dom"; // Import useLocation
 import ChartIPSemester from "./ChartIPSemester"; // Import ChartIPSemester component
@@ -236,6 +236,12 @@ const Kategorisasi = () => {
       return "Mahasiswa sudah mencapai tingkat keterlibatan yang optimal dan memenuhi kriteria.";
     return "Mahasiswa sudah mengikuti cukup banyak kegiatan, namun masih perlu peningkatan dalam jenis kegiatan yang lebih berdampak.";
   };
+
+  const CategoryIcon = (data) => {        
+    if (data === "Memenuhi Standar")
+      return <BsCheckCircle size={50} color="white" />;
+    return <BsExclamationCircleFill size={50} color="white" />;
+  };
   const getStatusBadge = (status) => {
     switch (status) {
       case "Design":
@@ -411,7 +417,7 @@ const Kategorisasi = () => {
                   <BootstrapCard.Body>
                     {/* Icon Section */}
                     <div className="d-flex justify-content-center align-items-center mb-4">
-                      <BsExclamationCircleFill size={50} color="white" />
+                    {CategoryIcon(student?.kategori_mahasiswa)}
                     </div>
 
                     {/* Title Section */}
