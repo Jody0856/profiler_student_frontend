@@ -246,11 +246,9 @@ const Kategorisasi = () => {
     switch (status) {
       case "Design":
         return <Badge bg="success">{status}</Badge>;
-      case "IT":
-        return <Badge bg="primary">{status}</Badge>;
       case "Programming":
         return <Badge bg="warning" text="dark">{status}</Badge>;
-      case "Gaming":
+      case "Video Game":
         return <Badge bg="danger">{status}</Badge>;
       case "Data Science":
         return <Badge bg="info">{status}</Badge>;
@@ -262,38 +260,19 @@ const Kategorisasi = () => {
         return <Badge bg="light" text="dark">{status}</Badge>;
       case "Virtual Reality":
         return <Badge bg="purple" style={{ backgroundColor: "#6f42c1" }}>{status}</Badge>;
-      case "Marketing":
-        return <Badge bg="teal" style={{ backgroundColor: "#20c997" }}>{status}</Badge>;
       case "Business & Tech":
         return <Badge bg="orange" style={{ backgroundColor: "#fd7e14" }}>{status}</Badge>;
       case "Project Management":
         return <Badge bg="blue" style={{ backgroundColor: "#0d6efd" }}>{status}</Badge>;
-      case "Art & Music":
-        return <Badge bg="pink" style={{ backgroundColor: "#e83e8c" }}>{status}</Badge>;
-      case "Health & Wellness":
-        return <Badge bg="green" style={{ backgroundColor: "#28a745" }}>{status}</Badge>;
-      case "STEM":
-        return <Badge bg="yellow" style={{ backgroundColor: "#ffc107", color: "#212529" }}>{status}</Badge>;
-      case "Community Service":
-        return <Badge bg="brown" style={{ backgroundColor: "#795548" }}>{status}</Badge>;
-      case "Leadership & Personal Development":
-        return <Badge bg="cyan" style={{ backgroundColor: "#17a2b8", color: "#212529"  }}>{status}</Badge>;
-      case "Communication":
-        return <Badge bg="indigo" style={{ backgroundColor: "#6610f2" }}>{status}</Badge>;
       case "Cinematography":
         return <Badge bg="gold" style={{ backgroundColor: "#f0ad4e" }}>{status}</Badge>;
-      case "Education":
-        return <Badge bg="skyblue" style={{ backgroundColor: "#5bc0de" }}>{status}</Badge>;
-      case "Law":
-        return <Badge bg="navy" style={{ backgroundColor: "#001f3f" }}>{status}</Badge>;
-      case "Arts & Humanities":
-        return <Badge bg="violet" style={{ backgroundColor: "#d63384" }}>{status}</Badge>;
+      case "Art & Photography":
+        return <Badge bg="pink" style={{ backgroundColor: "#e83e8c" }}>{status}</Badge>;
       default:
         return <Badge bg="secondary">{status}</Badge>;
     }
   };
-  
-  
+    
   return (
     <Container>
       <BootstrapCard
